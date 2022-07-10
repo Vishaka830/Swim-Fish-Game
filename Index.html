@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Swim Fish Game</title>
+        <link href="https://fonts.googleapis.com/css?family=Quicksand|Pacifico|Great+Vibes|Parisienne|Audiowide" rel="stylesheet">
+         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+         <script src="functionality.js" type="text/javascript"></script>
+         <style>
+             /* Created by vishaka🎶 */
+
+body {
+    margin:0;
+    font-family:quicksand;
+    user-select:none;
+}
+::-webkit-scrollbar{
+    display:none;
+}
+#home_page,#over,#instructions{
+    font-family:audiowide;
+    height:100vh;
+    width:100vw;
+    background:url("https://i.pinimg.com/originals/cd/9b/6f/cd9b6fc7f536e724bfe97ec0687fabb5.jpg");
+    background-size:cover;
+    background-position:50% 50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    flex-flow:column;
+}
+#over,#instructions{
+    display:none;
+}
+li{
+    margin:10px;
+    font-family:quicksand;
+    margin-left:0px;
+}
+#option{
+    padding:20px;
+    cursor:pointer ;
+    -webkit-tap-highlight-color:transparent ;
+}
+#line{
+    width:100%;
+    height:5px;
+    background:rgba(0,0,0,0.5);
+}
+#cont{
+    max-height:400px;
+    width:300px;
+    background:rgba(255,255,255,0.2);
+    backdrop-filter:blur(10px);
+    border-radius:10px;
+    text-align:center;
+    overflow:scroll;
+}
+#game{
+    height:100vh;
+    width:100vw;
+    background:-webkit-linear-gradient(#0ff,#076585);
+    display:none;
+}
+#pipe{
+    height:100vh;
+    width:80px;
+    background:-webkit-linear-gradient(left,#666,white,#666);
+    /*background:url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWp2fCvgQ6ACttOZgXUxz2PQJ_Awvq9IznTQ&usqp=CAU");*/
+    background-size:cover;
+    position:fixed;
+    animation:move 4s linear infinite ;
+    left:calc(100vw + 80px);
+    z-index:2;
+}
+@keyframes move{
+    from{
+        left:calc(100vw + 80px);
+    }
+    to{
+        left:-80px;
+    }
+}
+#controls{
+    height:220px;
+    width:160px;
+    background:rgba(255,255,255,0.3);
+    border-radius:50%;
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    backdrop-filter:blur(10px);
+    z-index:3;
+}
+#up,#down,#str{
+    width:130px;
+    background:rgba(255,255,255,0.3);
+    margin-top:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:25px;
+    border:none;
+    outline:none;
+    cursor:pointer ;
+    -webkit-tap-highlight-color:transparent ;
+}
+#str{
+    height:50px;
+}
+#up,#down{
+    height:65px;
+}
+#up:active,#down:active,#str:active{
+    transform:scale(0.9);
+    box-shadow:inset 0 0 10px white;
+}
+#up{
+    border-top-left-radius:150px; 
+    border-top-right-radius:150px;
+}
+#down{
+    border-bottom-left-radius:150px; 
+    border-bottom-right-radius:150px;
+}
+#hole{
+    width:100%;
+    height:100px;
+    position:absolute ;
+    background:-webkit-linear-gradient(#0ff,#076585);
+    background-attachment:fixed;
+    /*top:50vh;*/
+    top:50vh;
+    box-shadow:0;
+}
+#fish{
+    position:fixed;
+    z-index:4;
+    left:10px;
+    top:50vh;
+    height:50px;
+    width:50px;
+    
+}
+#fish img{
+   height:100%;
+   width:100%;
+}
+#scoreboard{
+    position:fixed;
+    right:0;
+    top:0;
+    padding:20px;
+    color:white;
+    background:rgba(255,255,255,0.5);
+    border-bottom-left-radius:10px;
+    z-index:3;
+    backdrop-filter:blur(10px);
+    font-size:20px;
+    font-family:audiowide;
+}
+
+         </style>
+    </head>
+    <body>
+        <div id="home_page">
+            <h1>Swim Fish!</h1><br><br>
+            <div id="cont">
+                <div id="option" onclick="openGame('home_page')">Start game</div>
+                <div id="line"></div>
+                <div id="option" onclick="open_close('instructions','home_page')">Instructions</div>
+            </div><br><br>
+            &copy;
+        </div>
+        <div id="over">
+            <h1>Game over!</h1><br><h2>Score: <span class="score">0</span></h2><h2>Highest Score: <span class="high_score">0</span></h2><br><br>
+            <div id="cont">
+                <div id="option" onclick="openGame('over')">Restart</div>
+                <div id="line"></div>
+                <div id="option" onclick="open_close('home_page','over')">Back to Menu</div>
+            </div>
+        </div>
+        <div id="game">
+        <div id="scoreboard">Score: <span class="score">0</span><br>Highest Score: <span class="high_score">0</span></div>
+        <div id="fish">
+            <img src="f1.png">
+        </div>
+            <div id="pipe">
+                <div id="hole"></div>
+            </div>
+            <div id="controls">
+            <center>
+                <button id="up" onclick="vibrate('50')">&#x25B2</button>
+                <button id="str" onclick="vibrate('50')">&#x2192</button>
+                <button id="down" onclick="vibrate('50')">&#x25BC</button>
+            </center>
+            </div>
+        </div>
+        <div id="instructions">
+            <h1>Instructions</h1>
+            <div id="cont" class="instructions">
+                <ul>
+                    <li>The controls panel is present on the bottom right corner of the game window.</li>
+                    <li>Click on the up arrow to move up, down arrow to move down, and right arrow in the middle to move straight.</li>
+                    <li>You can also use the arrow keys of your keyboard (up, down, right)</li>
+                    <li>Press the keys (up / down) multiple times to accelerate.</li>
+                    <li>Try avoiding the obstacles using the control keys (pass through the holes). The game ends if you hit an obstacle.</li>
+                </ul>
+            </div><br>
+            <div id="cont">
+                <div id="option" onclick="open_close('home_page','instructions')">Back to Menu</div>
+            </div>
+        </div>
+      
+    </body>
+</html>
